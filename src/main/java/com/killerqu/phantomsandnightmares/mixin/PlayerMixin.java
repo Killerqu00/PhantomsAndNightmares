@@ -1,7 +1,6 @@
 package com.killerqu.phantomsandnightmares.mixin;
 
 import com.killerqu.phantomsandnightmares.config.CommonConfig;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.player.Player;
