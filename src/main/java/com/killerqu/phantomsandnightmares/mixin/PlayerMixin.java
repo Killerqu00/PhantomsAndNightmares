@@ -8,14 +8,13 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(value = Player.class)
 public class PlayerMixin {
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;awardStat(Lnet/minecraft/resources/ResourceLocation;)V"))
     private void phantomsandnightmares$awardStatRedirect(Player instance, ResourceLocation pStatKey, Operation<Void> original) {
         if (CommonConfig.ENABLE_NATURAL_TIMESINCEREST.get() || pStatKey != Stats.TIME_SINCE_REST) {
-            instance.awardStat(pStatKey);
+            original.call(instance, pStatKey);
         }
     }
 }

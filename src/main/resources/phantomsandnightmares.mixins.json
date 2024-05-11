@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "com.killerqu.phantomsandnightmares.mixin",
   "compatibilityLevel": "JAVA_8",
-  "refmap": "PhantomsAndNightmares.refmap.json",
+  "refmap": "phantomsandnightmares.refmap.json",
   "mixins": [
     "PlayerMixin"
   ],
