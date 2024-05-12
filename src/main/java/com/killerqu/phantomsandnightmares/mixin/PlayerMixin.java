@@ -1,20 +1,18 @@
 package com.killerqu.phantomsandnightmares.mixin;
 
 import com.killerqu.phantomsandnightmares.config.CommonConfig;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.stats.Stats;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = Player.class)
+@Mixin(value = PlayerEntity.class)
 public class PlayerMixin {
-    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;awardStat(Lnet/minecraft/resources/ResourceLocation;)V"))
-    private void phantomsandnightmares$awardStatRedirect(Player instance, ResourceLocation pStatKey, Operation<Void> original) {
-        if (CommonConfig.ENABLE_NATURAL_TIMESINCEREST.get() || pStatKey != Stats.TIME_SINCE_REST) {
-            original.call(instance, pStatKey);
-        }
+    @Inject(method = "Lnet/minecraft/entity/player/PlayerEntity;awardStat(Lnet/minecraft/util/ResourceLocation;)V", at = @At(value = "HEAD"), cancellable = true)
+    private void phantomsandnightmares$awardStatRedirect(ResourceLocation pStatKey, CallbackInfo info) {
+        if (!CommonConfig.ENABLE_NATURAL_TIMESINCEREST.get() && pStatKey == Stats.TIME_SINCE_REST) info.cancel();
     }
 }
