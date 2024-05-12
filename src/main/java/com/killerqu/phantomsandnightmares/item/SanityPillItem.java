@@ -1,22 +1,22 @@
 package com.killerqu.phantomsandnightmares.item;
 
 import net.minecraft.stats.Stats;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ActionResult;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 public class SanityPillItem extends Item {
     public SanityPillItem(Properties properties) {
         super(properties);
     }
 
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
+    public ActionResult<ItemStack> use(World pLevel, PlayerEntity pPlayer, Hand pHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
         pPlayer.resetStat(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
         itemstack.shrink(1);
-        return InteractionResultHolder.consume(itemstack);
+        return ActionResult.consume(itemstack);
     }
 }
